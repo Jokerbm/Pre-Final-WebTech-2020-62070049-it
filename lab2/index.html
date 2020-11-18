@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        console.log("start")
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const url = "https://dd-wtlab2020.netlify.app/pre-final/ezquiz.json"; // site that doesn’t send Access-Control-*
+        // fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+        fetch("local.json") // https://cors-anywhere.herokuapp.com/https://example.com
+            .then(response => response.json())
+            .then(contents => console.log(contents.tracks.items.forEach(x => {
+                container = document.getElementById('items');
+                container.innerHTML += `      <div class="col-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="${x.album.images[0].url}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">${x.album.name}
+                        <br/>
+                         Artist: ${x.album.artists[0].name}
+                         <br/>
+                         Release date: ${x.album.release_date}
+                         <br/>
+                         Avaliable</p>  ${x.available_markets.length}
+                    </div>
+                </div>
+            </div>`
+            })))
+    </script>
+    <script>
+        function test() {
+            let count = 0
+            let state = false
+            console.log("search")
+            mayday = document.getElementById('items');
+            mayday.innerHTML = ""
+
+            const proxyurl = "https://cors-anywhere.herokuapp.com/";
+            const url = "https://dd-wtlab2020.netlify.app/pre-final/ezquiz.json"; // site that doesn’t send Access-Control-*
+            // fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+            fetch("local.json") // https://cors-anywhere.herokuapp.com/https://example.com
+                .then(response => response.json())
+                .then(contents => console.log(contents.tracks.items.forEach(x => {
+                    // console.log(x.album.name)
+                    // console.log(x.album.artists[0].name)
+                    text = document.getElementById('music');
+                    container = document.getElementById('items');
+                    if (x.album.name.includes(text.value) || x.album.artists[0].name.includes(text.value)) {
+                        state = true
+                        count += 1
+                        container.innerHTML += `      <div class="col-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="${x.album.images[0].url}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">${x.album.name}
+                        <br/>
+                         Artist: ${x.album.artists[0].name}
+                         <br/>
+                         Release date: ${x.album.release_date}
+                         <br/>
+                         Avaliable</p>  ${x.available_markets.length}
+                    </div>
+                </div>
+            </div>`
+                    }
+                }
+                ))
+                
+                
+                ).then(() =>{
+                    if(state){
+                        document.getElementById('items').innerHTML = "เจอทั้งหมด " +   count  + " เพลง <br />"
+                      
+                    }
+                    else{
+                        console.log("not found")
+                       document.getElementById('items').innerHTML = "<br />NOT FOUND"
+                       console.log(document.getElementById('testa').value)
+                    }
+                })
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <form onsubmit="test(); return false">
+        <div class="form-group">
+            <label id="testa" for="exampleInputEmail1">ระบุคำค้นหา</label>
+            <input type="text" class="form-control" id="music" placeholder="เพลง">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="container">
+        <div class="row" id="items"></div>
+    </div>
+</body>
+
+</html>
