@@ -83,7 +83,7 @@
                 
                 ).then(() =>{
                     if(state){
-                        document.getElementById('items').innerHTML = "เจอทั้งหมด " +   count  + " เพลง <br />"
+                        document.getElementById('texts').innerHTML = "เจอทั้งหมด " +   count  + " เพลง <br />"
                       
                     }
                     else{
@@ -107,6 +107,7 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <div class="container">
+        <div class="row" id="texts"></div>
         <div class="row" id="items"></div>
     </div>
 </body>
